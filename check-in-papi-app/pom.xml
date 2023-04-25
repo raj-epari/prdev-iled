@@ -22,7 +22,7 @@
 	<!-- GAV Coordinates -->
 	<groupId>715942ae-3474-4c0f-997b-eb920ade699f</groupId>
 	<artifactId>check-in-papi-app</artifactId>
-	<version>1.1.1</version>
+	<version>1.1.2</version>
 
 	<packaging>mule-application</packaging>
 
