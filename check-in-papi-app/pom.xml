@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>715942ae-3474-4c0f-997b-eb920ade699f</groupId>
+		<artifactId>solutions-parent-pom</artifactId>
+		<version>1.0.1</version>
+		<relativePath>../parent-pom/pom.xml</relativePath>
+
+		<!-- 1st: relative directory or path -->
+		<!-- <relativePath>../parent-pom/pom.xml</relativePath> -->
+
+		<!-- 2nd: short form: Parent pom is resolved always from .m2 folder -->
+		<!-- <relativePath/> -->
+
+		<!-- 3rd: No relative path, parent pom is resolved from REMOTE repo -->
+	</parent>
+
+	<!-- GAV Coordinates -->
+	<groupId>715942ae-3474-4c0f-997b-eb920ade699f</groupId>
+	<artifactId>check-in-papi-app</artifactId>
+	<version>1.1.1</version>
+
+	<packaging>mule-application</packaging>
+
+	<name>check-in-papi-app</name>
+
+	<!-- Properties -->
+	<properties>
+		<!-- <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding> 
+			<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding> 
+			<app.runtime>4.4.0-20230320</app.runtime> <mule.maven.plugin.version>3.8.0</mule.maven.plugin.version> -->
+	</properties>
+
+	<!-- Compile & Additional Plugin -->
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-clean-plugin</artifactId>
+				<version>3.2.0</version>
+			</plugin>
+			<plugin>
+				<groupId>org.mule.tools.maven</groupId>
+				<artifactId>mule-maven-plugin</artifactId>
+				<extensions>true</extensions>
+				<configuration>
+					<cloudhub2Deployment>
+						<uri>https://anypoint.mulesoft.com</uri>
+						<businessGroupId>${project.groupId}</businessGroupId>
+						<environment>Sandbox</environment>
+						<target>Cloudhub-US-East-2</target>
+						<provider>MC</provider>
+						<!-- Runtime Server Version -->
+						<muleVersion>4.4.0</muleVersion>
+						
+						<!-- reads credentials from settings.xml -->
+						<server>cloudhub-deploy</server>
+						
+						<!-- <connectedAppClientId></connectedAppClientId>
+						<connectedAppClientSecret></connectedAppClientSecret>
+						<connectedAppGrantType>client_credentials</connectedAppGrantType> -->
+						
+						<applicationName>check-in-raj</applicationName>
+						<replicas>1</replicas>
+						<vCores>0.1</vCores>
+						
+						<!-- Time in Milliseconds -->
+						<deploymentTimeout>240000</deploymentTimeout>
+						<properties>
+							<api.id>${api.id}</api.id>
+							<anypoint.platform.client_id>${ap.client_id}</anypoint.platform.client_id>
+							<anypoint.platform.client_secret>${ap.client_secret}</anypoint.platform.client_secret>
+						</properties>
+						<deploymentSettings>
+							<http>
+								<inbound>
+									<lastMileSecurity>true</lastMileSecurity>
+								</inbound>
+							</http>
+						</deploymentSettings>
+						<integrations>
+							<services>
+								<objectStoreV2>
+									<enabled>true</enabled>
+								</objectStoreV2>
+							</services>
+						</integrations>
+					</cloudhub2Deployment>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<!-- Dependencies -->
+	<dependencies>
+		<dependency>
+			<groupId>org.mule.connectors</groupId>
+			<artifactId>mule-http-connector</artifactId>
+			<classifier>mule-plugin</classifier>
+		</dependency>
+		<dependency>
+			<groupId>org.mule.connectors</groupId>
+			<artifactId>mule-sockets-connector</artifactId>
+			<version>1.2.3</version>
+			<classifier>mule-plugin</classifier>
+		</dependency>
+		<dependency>
+			<groupId>715942ae-3474-4c0f-997b-eb920ade699f</groupId>
+			<artifactId>check-in-papi</artifactId>
+			<version>1.0.0</version>
+			<classifier>oas</classifier>
+			<type>zip</type>
+		</dependency>
+		<dependency>
+			<groupId>org.mule.modules</groupId>
+			<artifactId>mule-apikit-module</artifactId>
+			<version>1.8.2</version>
+			<classifier>mule-plugin</classifier>
+		</dependency>
+	</dependencies>
+
+	<!-- <repositories> <repository> <id>anypoint-exchange-v3</id> <name>Anypoint 
+		Exchange</name> <url>https://maven.anypoint.mulesoft.com/api/v3/maven</url> 
+		<layout>default</layout> </repository> <repository> <id>mulesoft-releases</id> 
+		<name>MuleSoft Releases Repository</name> <url>https://repository.mulesoft.org/releases/</url> 
+		<layout>default</layout> </repository> </repositories> <pluginRepositories> 
+		<pluginRepository> <id>mulesoft-releases</id> <name>MuleSoft Releases Repository</name> 
+		<layout>default</layout> <url>https://repository.mulesoft.org/releases/</url> 
+		<snapshots> <enabled>false</enabled> </snapshots> </pluginRepository> </pluginRepositories> -->
+
+</project>
